@@ -1,0 +1,8 @@
+<ng-container *ngIf="todo$ | async as todo; else todoFetching">
+  <h1>{{ todo.title }}</h1>
+  <h3>completed: {{ todo.completed }}</h3>
+</ng-container>
+
+<ng-template #todoFetching>
+  <div>Fetchiing...</div>
+</ng-template>
