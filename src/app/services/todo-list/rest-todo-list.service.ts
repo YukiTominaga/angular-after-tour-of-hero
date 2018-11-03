@@ -7,7 +7,7 @@ import { Todo } from '../../models/Todo';
 @Injectable({
   providedIn: 'root'
 })
-export class RestTodoListService implements TodoListService {
+export class RestTodoListService extends TodoListService {
   url = 'https://jsonplaceholder.typicode.com/todos';
   private _todoList$ = new BehaviorSubject<Todo[]>([]);
 
@@ -15,7 +15,9 @@ export class RestTodoListService implements TodoListService {
     return this._todoList$.asObservable();
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    super();
+  }
 
   public fetchTodoList(): void {
     this.http.get<Todo[]>(this.url).subscribe(
