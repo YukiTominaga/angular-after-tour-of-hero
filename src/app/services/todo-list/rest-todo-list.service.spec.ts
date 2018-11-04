@@ -11,18 +11,16 @@ describe('RestTodoListService', () => {
     providers: [RestTodoListService],
   }));
 
-  it('クソザコナメクジ', () => {
+  it('Todoリスト全部取れる', () => {
     const todoList: Todo[] = [
       { id: 1, userId: 1, title: 'title', completed: false }
     ];
     const todoService: RestTodoListService = TestBed.get(RestTodoListService);
     const http = TestBed.get(HttpTestingController);
 
-    todoService.fetchTodoList();
+    todoService.fetchTodoList().then(
+      hoge => expect(hoge).toBe(todoList)
+    );
     http.expectOne('https://jsonplaceholder.typicode.com/todos').flush(todoList);
-    todoService.todoList$.subscribe(todoList1 => {
-      console.log(todoList1);
-      expect(todoList1).toBe(todoList);
-    });
   });
 });

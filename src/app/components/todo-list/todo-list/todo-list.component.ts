@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Todo } from 'src/app/models/Todo';
+import { Component, OnInit } from '@angular/core';
+import { TodoListAllService } from '../../../services/todo-list/todo-list-all.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-todo-list',
@@ -7,12 +8,14 @@ import { Todo } from 'src/app/models/Todo';
   styleUrls: ['./todo-list.component.scss']
 })
 export class TodoListComponent implements OnInit {
-  @Input()
-  todoList: Todo[];
+  todoList$ = this.todoService.todoList$.pipe(
+    map(todoList => todoList.filter(todo => todo.userId === 1)), // 件数が多かったのでフィルタしました
+  );
 
-  constructor() { }
+  constructor(private todoService: TodoListAllService) { }
 
   ngOnInit() {
+    this.todoService.fetchAllTodoList();
   }
 
 }
